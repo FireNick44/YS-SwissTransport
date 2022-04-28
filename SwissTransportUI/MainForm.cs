@@ -22,6 +22,7 @@ namespace SwissTransportUI
         //Objekte 
         ListBox listBxSearchFrom = new ListBox();
         ListBox listBxSearchTo = new ListBox();
+        ListBox listBxSearch = new ListBox();
 
         private bool lastSearch = false;
 
@@ -50,7 +51,7 @@ namespace SwissTransportUI
         }
         private void txtBxFrom_TextChanged(object sender, EventArgs e)
         {
-            SearchFrom(this.txtBxFrom);
+            searchFromTo(this.txtBxFrom);
         }
 
         private void txtBxTo_Enter(object sender, EventArgs e)
@@ -59,35 +60,33 @@ namespace SwissTransportUI
         }
         private void txtBxTo_Leave(object sender, EventArgs e)
         {
-
+            
         }
         private void txtBxTo_TextChanged(object sender, EventArgs e)
         {
-          //if(lastSearch)
-                SearchTo(this.txtBxTo);
+            searchFromTo(this.txtBxTo);
         }
 
         //Custom Actions
         private void selectSearchFrom(object? sender, EventArgs e)
         {
-            if (listBxSearchFrom.Text == "") { }
-            else txtBxFrom.Text = listBxSearchFrom.Text;
+            if (listBxSearch.Text == "") { }
+            else txtBxFrom.Text = listBxSearch.Text;
         }
-
         private void selectSearchTo(object? sender, EventArgs e)
         {
-            if (listBxSearchTo.Text == "") { }
-            else txtBxTo.Text = listBxSearchTo.Text;
-
+            if (listBxSearch.Text == "") { }
+            else txtBxTo.Text = listBxSearch.Text;
         }
+
         //Functions
-        private void SearchFrom(Control sender)
+        private void searchFromTo(Control sender)
         {
             if (sender.Text != "")
             {
-                listBxSearchFrom.Items.Clear();
-                listBxSearchFrom.BringToFront();
-                listBxSearchFrom.Visible = true;
+                listBxSearch.Items.Clear();
+                listBxSearch.BringToFront();
+                listBxSearch.Visible = true;
 
                 var stations = t.GetStations(sender.Text);
                 foreach (var item in stations.StationList)
@@ -97,73 +96,38 @@ namespace SwissTransportUI
             }
             else if (sender.Text == "")
             {
-                listBxSearchFrom.SendToBack();
-                listBxSearchFrom.Visible = false;
-            }
-        }
-        private void SearchTo(Control sender)
-        {
-            if (txtBxTo.Text != "")
-            {
-                listBxSearchTo.Items.Clear();
-                listBxSearchTo.BringToFront();
-                listBxSearchTo.Visible = true;
-
-                var stations = t.GetStations(txtBxTo.Text);
-                foreach (var item in stations.StationList)
-                {
-                    listBxSearchTo.Items.Add(item.Name);
-                }
-            }
-            else if (txtBxTo.Text == "")
-            {
-                listBxSearchTo.SendToBack();
-                listBxSearchTo.Visible = false;
+                listBxSearch.SendToBack();
+                listBxSearch.Visible = false;
             }
         }
         private void create_Searchbar(Control sender, bool mission)
         {
             if (sender == txtBxFrom)
             {
-                if (mission)
-                {
-                    listBxSearchFrom.ItemHeight = 10;
-                    listBxSearchFrom.Items.AddRange(new object[] { });
-                    listBxSearchFrom.Location = new System.Drawing.Point(88, 54);
-                    listBxSearchFrom.Size = new System.Drawing.Size(347, 247);
-                    listBxSearchFrom.TabIndex = 99;
-                    listBxSearchFrom.TabStop = false;
-                    listBxSearchFrom.SelectedIndexChanged += new System.EventHandler(selectSearchFrom);
-                    panelCenter.Controls.Add(listBxSearchFrom);
-                    listBxSearchFrom.SendToBack();
-                    listBxSearchFrom.Visible = false;
-                }
-                else if (!mission)
-                {
-                    panelCenter.Controls.Remove(listBxSearchFrom);
-                    listBxSearchFrom.Visible = false;
-                }
+                listBxSearch.Location = new System.Drawing.Point(632, 54);
+                listBxSearch.SelectedIndexChanged += new System.EventHandler(selectSearchTo);
             }
-            else if(sender == txtBxTo)
+            else if (sender == txtBxTo) 
             {
-                if (mission)
-                {
-                    listBxSearchTo.ItemHeight = 10;
-                    listBxSearchTo.Items.AddRange(new object[] { });
-                    listBxSearchTo.Size = new System.Drawing.Size(347, 247);
-                    listBxSearchTo.Location = new System.Drawing.Point(632, 54);
-                    listBxSearchTo.TabIndex = 99;
-                    listBxSearchTo.TabStop = false;
-                    listBxSearchTo.SelectedIndexChanged += new System.EventHandler(selectSearchTo);
-                    panelCenter.Controls.Add(listBxSearchTo);
-                    listBxSearchTo.SendToBack();
-                    listBxSearchTo.Visible = false;
-                }
-                else if (!mission)
-                {
-                    panelCenter.Controls.Remove(listBxSearchTo);
-                    listBxSearchTo.Visible = false;
-                }
+                listBxSearchFrom.Location = new System.Drawing.Point(88, 54);
+                listBxSearch.SelectedIndexChanged += new System.EventHandler(selectSearchFrom);
+            }
+
+            if (mission)
+            {
+                listBxSearch.ItemHeight = 10;
+                listBxSearch.Items.AddRange(new object[] { });
+                listBxSearch.Size = new System.Drawing.Size(347, 247);
+                listBxSearch.TabIndex = 99;
+                listBxSearch.TabStop = false;
+                panelCenter.Controls.Add(listBxSearch);
+                listBxSearch.SendToBack();
+                listBxSearch.Visible = false;
+            }
+            else if (!mission)
+            {
+                panelCenter.Controls.Remove(listBxSearchFrom);
+                listBxSearchFrom.Visible = false;
             }
         }
     }
