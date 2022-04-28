@@ -146,10 +146,10 @@
             // 
             // tabMap
             // 
-            this.tabMap.Location = new System.Drawing.Point(4, 32);
+            this.tabMap.Location = new System.Drawing.Point(4, 29);
             this.tabMap.Name = "tabMap";
             this.tabMap.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMap.Size = new System.Drawing.Size(1098, 662);
+            this.tabMap.Size = new System.Drawing.Size(1098, 665);
             this.tabMap.TabIndex = 1;
             this.tabMap.Text = "                     Map                      ";
             this.tabMap.UseVisualStyleBackColor = true;
@@ -219,10 +219,10 @@
             // 
             // tabArr
             // 
-            this.tabArr.Location = new System.Drawing.Point(4, 32);
+            this.tabArr.Location = new System.Drawing.Point(4, 29);
             this.tabArr.Name = "tabArr";
             this.tabArr.Padding = new System.Windows.Forms.Padding(3);
-            this.tabArr.Size = new System.Drawing.Size(405, 150);
+            this.tabArr.Size = new System.Drawing.Size(405, 153);
             this.tabArr.TabIndex = 1;
             this.tabArr.Text = "     Arrival     ";
             this.tabArr.UseVisualStyleBackColor = true;
@@ -244,6 +244,9 @@
             this.txtBxTo.Name = "txtBxTo";
             this.txtBxTo.Size = new System.Drawing.Size(347, 31);
             this.txtBxTo.TabIndex = 1;
+            this.txtBxTo.TextChanged += new System.EventHandler(this.txtBxTo_TextChanged);
+            this.txtBxTo.Enter += new System.EventHandler(this.txtBxTo_Enter);
+            this.txtBxTo.Leave += new System.EventHandler(this.txtBxTo_Leave);
             // 
             // label2
             // 
@@ -276,13 +279,14 @@
             // 
             // txtBxFrom
             // 
+            this.txtBxFrom.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtBxFrom.Location = new System.Drawing.Point(73, 9);
             this.txtBxFrom.Name = "txtBxFrom";
             this.txtBxFrom.Size = new System.Drawing.Size(347, 31);
             this.txtBxFrom.TabIndex = 0;
-            this.txtBxFrom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxFrom_KeyPress);
+            this.txtBxFrom.TextChanged += new System.EventHandler(this.txtBxFrom_TextChanged);
+            this.txtBxFrom.Enter += new System.EventHandler(this.txtBxFrom_Enter);
             this.txtBxFrom.Leave += new System.EventHandler(this.txtBxFrom_Leave);
-            this.txtBxFrom.MouseLeave += new System.EventHandler(this.txtBxFrom_Leave);
             // 
             // btnSwitch
             // 
