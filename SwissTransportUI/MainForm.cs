@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SwissTransport.Core;
+using SwissTransport.Models;
+
 
 namespace SwissTransportUI
 {
@@ -19,13 +21,11 @@ namespace SwissTransportUI
             InitializeComponent();
         }
 
+
         //Objekte 
         ListBox listBxSearchFrom = new ListBox();
         ListBox listBxSearchTo = new ListBox();
         ListBox listBxSearch = new ListBox();
-
-        private bool lastSearch = false;
-
 
 
         //Actions
@@ -40,14 +40,13 @@ namespace SwissTransportUI
             txtBxFrom.Text = txtBxTo.Text;
             txtBxTo.Text = tmpV;
         }
-        
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
         private void txtBxFrom_Enter(object sender, EventArgs e)
         {
             create_Searchbar(this.txtBxFrom, true);
-        }
-        private void txtBxFrom_Leave(object sender, EventArgs e)
-        {
-
         }
         private void txtBxFrom_TextChanged(object sender, EventArgs e)
         {
@@ -58,26 +57,32 @@ namespace SwissTransportUI
         {
             create_Searchbar(this.txtBxTo, true);
         }
-        private void txtBxTo_Leave(object sender, EventArgs e)
-        {
-            
-        }
         private void txtBxTo_TextChanged(object sender, EventArgs e)
         {
             searchFromTo(this.txtBxTo);
         }
-
+        
         //Custom Actions
         private void selectSearchFrom(object? sender, EventArgs e)
         {
             if (listBxSearch.Text == "") { }
             else txtBxFrom.Text = listBxSearch.Text;
         }
-        private void selectSearchTo(object? sender, EventArgs e)
+        private void selectSearch(object? sender, EventArgs e)
         {
-            if (listBxSearch.Text == "") { }
-            else txtBxTo.Text = listBxSearch.Text;
+            if(listBxSearch.Location.X == 88)
+            {
+                if (listBxSearch.Text == "") { }
+                else txtBxFrom.Text = listBxSearch.Text;
+            }
+            else if(listBxSearch.Location.X == 632)
+            {
+                if (listBxSearch.Text == "") { }
+                else txtBxTo.Text = listBxSearch.Text;
+            }
         }
+
+
 
         //Functions
         private void searchFromTo(Control sender)
@@ -88,11 +93,18 @@ namespace SwissTransportUI
                 listBxSearch.BringToFront();
                 listBxSearch.Visible = true;
 
-                var stations = t.GetStations(sender.Text);
-                foreach (var item in stations.StationList)
+                Stations stations = t.GetStations(sender.Text);
+                var noResult = stations.StationList.FirstOrDefault(); //1.Item
+
+                if (noResult == null || noResult.Name == null) listBxSearch.Items.Add("No results"); //NoResult Test
+                else if (noResult.Name != null)
                 {
-                    listBxSearchFrom.Items.Add(item.Name);
+                    foreach (var item in stations.StationList)
+                    {
+                        listBxSearch.Items.Add(item.Name.ToString());
+                    }
                 }
+
             }
             else if (sender.Text == "")
             {
@@ -102,22 +114,16 @@ namespace SwissTransportUI
         }
         private void create_Searchbar(Control sender, bool mission)
         {
-            if (sender == txtBxFrom)
-            {
-                listBxSearch.Location = new System.Drawing.Point(632, 54);
-                listBxSearch.SelectedIndexChanged += new System.EventHandler(selectSearchTo);
-            }
-            else if (sender == txtBxTo) 
-            {
-                listBxSearchFrom.Location = new System.Drawing.Point(88, 54);
-                listBxSearch.SelectedIndexChanged += new System.EventHandler(selectSearchFrom);
-            }
+            //if mission is true, create listBxSearch
+            if (sender == txtBxFrom)    listBxSearch.Location = new System.Drawing.Point(88, 54);
+            else if (sender == txtBxTo) listBxSearch.Location = new System.Drawing.Point(632, 54);
 
             if (mission)
             {
                 listBxSearch.ItemHeight = 10;
                 listBxSearch.Items.AddRange(new object[] { });
                 listBxSearch.Size = new System.Drawing.Size(347, 247);
+                listBxSearch.SelectedIndexChanged += new System.EventHandler(selectSearch);
                 listBxSearch.TabIndex = 99;
                 listBxSearch.TabStop = false;
                 panelCenter.Controls.Add(listBxSearch);
@@ -126,9 +132,68 @@ namespace SwissTransportUI
             }
             else if (!mission)
             {
-                panelCenter.Controls.Remove(listBxSearchFrom);
-                listBxSearchFrom.Visible = false;
+                panelCenter.Controls.Remove(listBxSearch);
+                listBxSearch.Visible = false;
             }
+        }
+        private void refresh()
+        {
+
+            if (txtBxFrom.Text == "") noResultBoard();
+            else
+            {
+                var testFrom = t.GetStations(txtBxFrom.Text);
+                var noResultFrom = testFrom.StationList.FirstOrDefault();
+
+                if (noResultFrom == null || noResultFrom.Name == null) noResultBoard();
+                else
+                {
+                    string currentLocation;
+                    //string fill = "     choose a starting location     ";
+                    string fill = "────────────────────────────────────";
+                    var stationBoard = t.GetStationBoard(txtBxFrom.Text, txtBxFrom.Text);
+
+                    currentLocation = "(" + stationBoard.Station.Name + ")";
+                    if (stationBoard.Station.Name == null) currentLocation = "location (Not a station)";
+
+                    listBxDepBoard.Items.Clear();
+                    listBxDepBoard.Items.Add(currentLocation);
+
+                    foreach (StationBoard departure in stationBoard.Entries)
+                    {
+
+                        listBxDepBoard.Items.Add(fill);
+
+                        string timeSplit = "";
+
+                        if (departure.Stop.Departure.TimeOfDay.Hours < 10) timeSplit = "0";
+                        else if (departure.Stop.Departure.TimeOfDay.Hours == 0) timeSplit = "00";
+                        listBxDepBoard.Items.Add(
+
+                            + departure.Stop.Departure.TimeOfDay.Hours
+                            + ":"
+                            + timeSplit
+                            + departure.Stop.Departure.TimeOfDay.Minutes
+                            + "  "
+                            + departure.To
+                            );
+                    }
+                }
+            }
+
+
+        }
+
+        //Ausgabe
+        private void noResultBoard()
+        {
+            listBxDepBoard.Items.Clear();
+            listBxDepBoard.Items.AddRange(new object[]
+            {
+                "",
+                "              No result             ",
+                ""
+            });
         }
     }
 }
