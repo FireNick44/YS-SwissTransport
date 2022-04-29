@@ -266,7 +266,8 @@
             this.dataGridViewTime.RowTemplate.Height = 29;
             this.dataGridViewTime.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewTime.Size = new System.Drawing.Size(1094, 655);
-            this.dataGridViewTime.TabIndex = 0;
+            this.dataGridViewTime.TabIndex = 99;
+            this.dataGridViewTime.TabStop = false;
             // 
             // dataGridViewBoxTimeDep
             // 
@@ -277,7 +278,7 @@
             this.dataGridViewBoxTimeDep.MinimumWidth = 6;
             this.dataGridViewBoxTimeDep.Name = "dataGridViewBoxTimeDep";
             this.dataGridViewBoxTimeDep.ReadOnly = true;
-            this.dataGridViewBoxTimeDep.Width = 220;
+            this.dataGridViewBoxTimeDep.Width = 200;
             // 
             // dataGridViewBoxTimeFrom
             // 
@@ -288,7 +289,7 @@
             this.dataGridViewBoxTimeFrom.MinimumWidth = 6;
             this.dataGridViewBoxTimeFrom.Name = "dataGridViewBoxTimeFrom";
             this.dataGridViewBoxTimeFrom.ReadOnly = true;
-            this.dataGridViewBoxTimeFrom.Width = 255;
+            this.dataGridViewBoxTimeFrom.Width = 275;
             // 
             // dataGridViewBoxTimeArr
             // 
@@ -299,7 +300,7 @@
             this.dataGridViewBoxTimeArr.MinimumWidth = 6;
             this.dataGridViewBoxTimeArr.Name = "dataGridViewBoxTimeArr";
             this.dataGridViewBoxTimeArr.ReadOnly = true;
-            this.dataGridViewBoxTimeArr.Width = 220;
+            this.dataGridViewBoxTimeArr.Width = 200;
             // 
             // dataGridViewBoxTimeTo
             // 
@@ -383,7 +384,9 @@
             this.tabsDates.Name = "tabsDates";
             this.tabsDates.SelectedIndex = 0;
             this.tabsDates.Size = new System.Drawing.Size(413, 186);
-            this.tabsDates.TabIndex = 6;
+            this.tabsDates.TabIndex = 99;
+            this.tabsDates.TabStop = false;
+            this.tabsDates.Click += new System.EventHandler(this.tabsDates_Click);
             // 
             // tabDep
             // 
@@ -406,7 +409,8 @@
             this.dateTimePickerDepDate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateTimePickerDepDate.Name = "dateTimePickerDepDate";
             this.dateTimePickerDepDate.Size = new System.Drawing.Size(206, 31);
-            this.dateTimePickerDepDate.TabIndex = 11;
+            this.dateTimePickerDepDate.TabIndex = 99;
+            this.dateTimePickerDepDate.TabStop = false;
             // 
             // dateTimePickerDepTime
             // 
@@ -418,7 +422,8 @@
             this.dateTimePickerDepTime.Name = "dateTimePickerDepTime";
             this.dateTimePickerDepTime.ShowUpDown = true;
             this.dateTimePickerDepTime.Size = new System.Drawing.Size(206, 31);
-            this.dateTimePickerDepTime.TabIndex = 12;
+            this.dateTimePickerDepTime.TabIndex = 99;
+            this.dateTimePickerDepTime.TabStop = false;
             // 
             // tabArr
             // 
@@ -441,7 +446,8 @@
             this.dateTimePickerArrDate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateTimePickerArrDate.Name = "dateTimePickerArrDate";
             this.dateTimePickerArrDate.Size = new System.Drawing.Size(206, 31);
-            this.dateTimePickerArrDate.TabIndex = 13;
+            this.dateTimePickerArrDate.TabIndex = 99;
+            this.dateTimePickerArrDate.TabStop = false;
             // 
             // dateTimePickerArrTime
             // 
@@ -453,7 +459,8 @@
             this.dateTimePickerArrTime.Name = "dateTimePickerArrTime";
             this.dateTimePickerArrTime.ShowUpDown = true;
             this.dateTimePickerArrTime.Size = new System.Drawing.Size(206, 31);
-            this.dateTimePickerArrTime.TabIndex = 13;
+            this.dateTimePickerArrTime.TabIndex = 99;
+            this.dateTimePickerArrTime.TabStop = false;
             // 
             // panelTo
             // 
@@ -548,7 +555,7 @@
             this.MinimumSize = new System.Drawing.Size(1600, 850);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Swiss Transport Final";
+            this.Text = "Swiss Transport";
             this.panelCenter.ResumeLayout(false);
             this.panelDepartureBoard.ResumeLayout(false);
             this.panelDepartureBoard.PerformLayout();

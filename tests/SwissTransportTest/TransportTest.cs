@@ -37,7 +37,9 @@
             DateTime date = DateTime.Now;
             DateTime time = DateTime.Now;
             bool isArrivalTime = false;
-            Connections connections = this.testee.GetConnections("Sursee", "Luzern", date, time, isArrivalTime);
+            int limit = 8;
+
+            Connections connections = this.testee.GetConnections("Sursee", "Luzern", date, time, isArrivalTime, limit);
 
             connections.Should().NotBeNull();
         }

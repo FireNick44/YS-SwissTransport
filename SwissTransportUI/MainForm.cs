@@ -17,6 +17,7 @@ namespace SwissTransportUI
     public partial class MainForm : Form
     {
         ITransport t = new Transport();
+
         public MainForm()
         {
             InitializeComponent();
@@ -24,6 +25,7 @@ namespace SwissTransportUI
 
         //Objekte
         ListBox listBxSearch = new ListBox();
+
 
         //Actions
         private void checkDateFilter_CheckedChanged(object sender, EventArgs e)
@@ -62,7 +64,16 @@ namespace SwissTransportUI
         {
             searchFromTo(this.txtBxTo);
         }
-        
+        private void tabsDates_Click(object sender, EventArgs e)
+        {
+            DateTime dateTime = DateTime.Now;
+            dateTimePickerDepTime.Value = dateTime;
+            dateTimePickerDepDate.Value = dateTime;
+            dateTimePickerArrTime.Value = dateTime;
+            dateTimePickerArrDate.Value = dateTime;
+        }
+
+
         //Custom Actions
         private void closeSearch(object sender, EventArgs e)
         {
@@ -86,6 +97,7 @@ namespace SwissTransportUI
                 else txtBxTo.Text = listBxSearch.Text;
             }
         }
+
 
         //Error Prints
         private void noResultBoard()
@@ -163,6 +175,13 @@ namespace SwissTransportUI
         {
             try
             {
+                //Filter same Text 
+                if (txtBxFrom.Text == txtBxTo.Text && txtBxFrom.Text != "" && txtBxTo.Text != "")
+                {
+                    Uri finalUri = new Uri("https://www.sbb.ch/en/timetable.html");
+                    webViewMap.Source = finalUri;
+                }
+
                 //Filter From -> Board
                 if (txtBxFrom.Text != "")
                 {
@@ -176,7 +195,7 @@ namespace SwissTransportUI
                     }
                 }
 
-                //Filter From & To -> Timetable
+                //Filter From & To -> Timetable & Google Map
                 if (txtBxFrom.Text != "" && txtBxTo.Text != "")
                 {
                     Stations testFrom = t.GetStations(txtBxFrom.Text);
@@ -207,6 +226,7 @@ namespace SwissTransportUI
             }
         }
 
+
         private void setUpBoard()
         {
             try
@@ -232,13 +252,16 @@ namespace SwissTransportUI
         {
             try
             {
+                //Vars
                 bool filter = false;
                 bool isArrivalTime = false;
+                string dep = "";
+                string arr = "";
+                int limit = 16;
                 DateTime date = DateTime.Now;
                 DateTime time = DateTime.Now;
 
                 if (checkDateFilter.CheckState == CheckState.Checked) filter = true;
-
                 if (tabsDates.SelectedTab.Name == "tabDep")
                 {
                     isArrivalTime = false;
@@ -252,48 +275,37 @@ namespace SwissTransportUI
                     date = dateTimePickerArrDate.Value;
                 }
 
-                var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text, date, time, isArrivalTime);
+                var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text, date, time, isArrivalTime, limit);
                 dataGridViewTime.Rows.Clear();
 
                 foreach(Connection result in connections.ConnectionList)
                 {
+                    //Time Format
                     if (!filter)
                     {
                         DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
-                        string dep = dateduration.ToString("HH:mm");
-
                         DateTime dateconv = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
-                        string arr = dateconv.ToString("HH:mm");
-
-                        string timestring = result.Duration.ToString();
-                        var split = timestring.Split('d', ':');
-
-                        string hour = Convert.ToString(split[1]);
-                        string mins = Convert.ToString(split[2]);
-                        string duration = "";
-
-                        if (hour == "0" || hour == "00") duration += hour + "h ";
-
-                        duration += mins + "min";
-
-                        dataGridViewTime.Rows.Add(dep, result.From.Station.Name, arr, result.To.Station.Name, duration);
+                        arr = dateconv.ToString("HH:mm");
+                        dep = dateduration.ToString("HH:mm");
                     }
-                    else
+                    else if(filter)
                     {
-                        string timestring = result.Duration.ToString();
-                        var split = timestring.Split('d', ':');
-
-                        string hour = Convert.ToString(split[1]);
-                        string mins = Convert.ToString(split[2]);
-                        string duration = "";
-
-                        if (hour == "0" || hour == "00") duration += hour + "h ";
-
-                        duration += mins + "min";
-
-                        dataGridViewTime.Rows.Add(result.From.Departure, result.From.Station.Name, result.To.Arrival, result.To.Station.Name, duration);
+                        DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+                        DateTime dateconv = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+                        arr = dateconv.ToString("dd/MM/y HH:mm");
+                        dep = dateduration.ToString("dd/MM/y HH:mm");
                     }
-                    
+
+                    string timestring = result.Duration.ToString();
+                    var split = timestring.Split('d', ':');
+                    string hour = Convert.ToString(split[1]);
+                    string mins = Convert.ToString(split[2]);
+                    string duration = "";
+
+                    if (hour != "00") duration += hour + "h ";
+                    duration += mins + "min";
+
+                    dataGridViewTime.Rows.Add(dep, result.From.Station.Name, arr, result.To.Station.Name, duration);
                 }
             }
             catch (Exception ex)
@@ -341,10 +353,7 @@ namespace SwissTransportUI
                     }
                 }
 
-                mail += text;
-                string finalmail = mail;
-
-                Uri finalUri = new Uri(finalmail);
+                Uri finalUri = new Uri(mail += text);
                 webViewMap.Source = finalUri;
             }
             catch (Exception ex)
