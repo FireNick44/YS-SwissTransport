@@ -232,25 +232,38 @@ namespace SwissTransportUI
         {
             try
             {
-                if (checkDateFilter.Checked == true)
+                bool filter = false;
+                bool isArrivalTime = false;
+                DateTime date = DateTime.Now;
+                DateTime time = DateTime.Now;
+
+                if (checkDateFilter.CheckState == CheckState.Checked) filter = true;
+
+                if (tabsDates.SelectedTab.Name == "tabDep")
                 {
-                    MessageBox.Show("Timetable DatePicker");
+                    isArrivalTime = false;
+                    time = dateTimePickerDepTime.Value;
+                    date = dateTimePickerDepDate.Value;
                 }
-                else
+                else if (tabsDates.SelectedTab.Name == "tabArr") 
                 {
-                    var stationBoard = t.GetStationBoard(txtBxFrom.Text, txtBxTo.Text);
-                    var test3 = t.GetStations(txtBxFrom.Text);
+                    isArrivalTime = true;
+                    time = dateTimePickerArrTime.Value;
+                    date = dateTimePickerArrDate.Value;
+                }
 
-                    var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text);
-                    dataGridViewTime.Rows.Clear();
+                var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text, date, time, isArrivalTime);
+                dataGridViewTime.Rows.Clear();
 
-                    foreach(Connection result in connections.ConnectionList)
+                foreach(Connection result in connections.ConnectionList)
+                {
+                    if (!filter)
                     {
                         DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
                         string dep = dateduration.ToString("HH:mm");
 
-                        DateTime date = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
-                        string arr = date.ToString("HH:mm");
+                        DateTime dateconv = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+                        string arr = dateconv.ToString("HH:mm");
 
                         string timestring = result.Duration.ToString();
                         var split = timestring.Split('d', ':');
@@ -259,11 +272,28 @@ namespace SwissTransportUI
                         string mins = Convert.ToString(split[2]);
                         string duration = "";
 
-                        if (hour != "0" || hour != "00") duration += hour + "h ";
+                        if (hour == "0" || hour == "00") duration += hour + "h ";
+
                         duration += mins + "min";
 
                         dataGridViewTime.Rows.Add(dep, result.From.Station.Name, arr, result.To.Station.Name, duration);
                     }
+                    else
+                    {
+                        string timestring = result.Duration.ToString();
+                        var split = timestring.Split('d', ':');
+
+                        string hour = Convert.ToString(split[1]);
+                        string mins = Convert.ToString(split[2]);
+                        string duration = "";
+
+                        if (hour == "0" || hour == "00") duration += hour + "h ";
+
+                        duration += mins + "min";
+
+                        dataGridViewTime.Rows.Add(result.From.Departure, result.From.Station.Name, result.To.Arrival, result.To.Station.Name, duration);
+                    }
+                    
                 }
             }
             catch (Exception ex)

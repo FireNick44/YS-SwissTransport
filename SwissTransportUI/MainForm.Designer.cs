@@ -60,9 +60,11 @@
             this.checkDateFilter = new System.Windows.Forms.CheckBox();
             this.tabsDates = new System.Windows.Forms.TabControl();
             this.tabDep = new System.Windows.Forms.TabPage();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerDepDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerDepTime = new System.Windows.Forms.DateTimePicker();
             this.tabArr = new System.Windows.Forms.TabPage();
+            this.dateTimePickerArrDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerArrTime = new System.Windows.Forms.DateTimePicker();
             this.panelTo = new System.Windows.Forms.Panel();
             this.txtBxTo = new System.Windows.Forms.TextBox();
             this.labelTo = new System.Windows.Forms.Label();
@@ -81,6 +83,7 @@
             this.panelDateFilter.SuspendLayout();
             this.tabsDates.SuspendLayout();
             this.tabDep.SuspendLayout();
+            this.tabArr.SuspendLayout();
             this.panelTo.SuspendLayout();
             this.panelFrom.SuspendLayout();
             this.SuspendLayout();
@@ -164,7 +167,7 @@
             this.dataGridViewBoxBoardNr.MinimumWidth = 6;
             this.dataGridViewBoxBoardNr.Name = "dataGridViewBoxBoardNr";
             this.dataGridViewBoxBoardNr.ReadOnly = true;
-            this.dataGridViewBoxBoardNr.Width = 60;
+            this.dataGridViewBoxBoardNr.Width = 68;
             // 
             // dataGridViewBoxBoardDep
             // 
@@ -262,7 +265,7 @@
             this.dataGridViewTime.RowHeadersWidth = 51;
             this.dataGridViewTime.RowTemplate.Height = 29;
             this.dataGridViewTime.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewTime.Size = new System.Drawing.Size(1094, 554);
+            this.dataGridViewTime.Size = new System.Drawing.Size(1094, 655);
             this.dataGridViewTime.TabIndex = 0;
             // 
             // dataGridViewBoxTimeDep
@@ -274,7 +277,7 @@
             this.dataGridViewBoxTimeDep.MinimumWidth = 6;
             this.dataGridViewBoxTimeDep.Name = "dataGridViewBoxTimeDep";
             this.dataGridViewBoxTimeDep.ReadOnly = true;
-            this.dataGridViewBoxTimeDep.Width = 125;
+            this.dataGridViewBoxTimeDep.Width = 220;
             // 
             // dataGridViewBoxTimeFrom
             // 
@@ -285,7 +288,7 @@
             this.dataGridViewBoxTimeFrom.MinimumWidth = 6;
             this.dataGridViewBoxTimeFrom.Name = "dataGridViewBoxTimeFrom";
             this.dataGridViewBoxTimeFrom.ReadOnly = true;
-            this.dataGridViewBoxTimeFrom.Width = 325;
+            this.dataGridViewBoxTimeFrom.Width = 255;
             // 
             // dataGridViewBoxTimeArr
             // 
@@ -296,10 +299,11 @@
             this.dataGridViewBoxTimeArr.MinimumWidth = 6;
             this.dataGridViewBoxTimeArr.Name = "dataGridViewBoxTimeArr";
             this.dataGridViewBoxTimeArr.ReadOnly = true;
-            this.dataGridViewBoxTimeArr.Width = 125;
+            this.dataGridViewBoxTimeArr.Width = 220;
             // 
             // dataGridViewBoxTimeTo
             // 
+            this.dataGridViewBoxTimeTo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
             this.dataGridViewBoxTimeTo.DefaultCellStyle = dataGridViewCellStyle7;
@@ -307,7 +311,6 @@
             this.dataGridViewBoxTimeTo.MinimumWidth = 6;
             this.dataGridViewBoxTimeTo.Name = "dataGridViewBoxTimeTo";
             this.dataGridViewBoxTimeTo.ReadOnly = true;
-            this.dataGridViewBoxTimeTo.Width = 325;
             // 
             // dataGridViewBoxTimeDura
             // 
@@ -384,8 +387,8 @@
             // 
             // tabDep
             // 
-            this.tabDep.Controls.Add(this.dateTimePicker1);
-            this.tabDep.Controls.Add(this.dateTimePicker2);
+            this.tabDep.Controls.Add(this.dateTimePickerDepDate);
+            this.tabDep.Controls.Add(this.dateTimePickerDepTime);
             this.tabDep.Location = new System.Drawing.Point(4, 32);
             this.tabDep.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabDep.Name = "tabDep";
@@ -395,29 +398,32 @@
             this.tabDep.Text = "     Departure    ";
             this.tabDep.UseVisualStyleBackColor = true;
             // 
-            // dateTimePicker1
+            // dateTimePickerDepDate
             // 
-            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(112, 86);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(206, 31);
-            this.dateTimePicker1.TabIndex = 11;
+            this.dateTimePickerDepDate.CalendarFont = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.dateTimePickerDepDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerDepDate.Location = new System.Drawing.Point(112, 86);
+            this.dateTimePickerDepDate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.dateTimePickerDepDate.Name = "dateTimePickerDepDate";
+            this.dateTimePickerDepDate.Size = new System.Drawing.Size(206, 31);
+            this.dateTimePickerDepDate.TabIndex = 11;
             // 
-            // dateTimePicker2
+            // dateTimePickerDepTime
             // 
-            this.dateTimePicker2.CalendarFont = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.dateTimePicker2.CustomFormat = "";
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker2.Location = new System.Drawing.Point(112, 37);
-            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(206, 31);
-            this.dateTimePicker2.TabIndex = 12;
+            this.dateTimePickerDepTime.CalendarFont = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.dateTimePickerDepTime.CustomFormat = "HH:mm";
+            this.dateTimePickerDepTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerDepTime.Location = new System.Drawing.Point(112, 37);
+            this.dateTimePickerDepTime.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.dateTimePickerDepTime.Name = "dateTimePickerDepTime";
+            this.dateTimePickerDepTime.ShowUpDown = true;
+            this.dateTimePickerDepTime.Size = new System.Drawing.Size(206, 31);
+            this.dateTimePickerDepTime.TabIndex = 12;
             // 
             // tabArr
             // 
+            this.tabArr.Controls.Add(this.dateTimePickerArrDate);
+            this.tabArr.Controls.Add(this.dateTimePickerArrTime);
             this.tabArr.Location = new System.Drawing.Point(4, 29);
             this.tabArr.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabArr.Name = "tabArr";
@@ -426,6 +432,28 @@
             this.tabArr.TabIndex = 1;
             this.tabArr.Text = "     Arrival     ";
             this.tabArr.UseVisualStyleBackColor = true;
+            // 
+            // dateTimePickerArrDate
+            // 
+            this.dateTimePickerArrDate.CalendarFont = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.dateTimePickerArrDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerArrDate.Location = new System.Drawing.Point(112, 86);
+            this.dateTimePickerArrDate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.dateTimePickerArrDate.Name = "dateTimePickerArrDate";
+            this.dateTimePickerArrDate.Size = new System.Drawing.Size(206, 31);
+            this.dateTimePickerArrDate.TabIndex = 13;
+            // 
+            // dateTimePickerArrTime
+            // 
+            this.dateTimePickerArrTime.CalendarFont = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.dateTimePickerArrTime.CustomFormat = "HH:mm";
+            this.dateTimePickerArrTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerArrTime.Location = new System.Drawing.Point(112, 37);
+            this.dateTimePickerArrTime.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.dateTimePickerArrTime.Name = "dateTimePickerArrTime";
+            this.dateTimePickerArrTime.ShowUpDown = true;
+            this.dateTimePickerArrTime.Size = new System.Drawing.Size(206, 31);
+            this.dateTimePickerArrTime.TabIndex = 13;
             // 
             // panelTo
             // 
@@ -520,7 +548,7 @@
             this.MinimumSize = new System.Drawing.Size(1600, 850);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Swiss Transport [Form UI v1.1]";
+            this.Text = "Swiss Transport Final";
             this.panelCenter.ResumeLayout(false);
             this.panelDepartureBoard.ResumeLayout(false);
             this.panelDepartureBoard.PerformLayout();
@@ -534,6 +562,7 @@
             this.panelDateFilter.PerformLayout();
             this.tabsDates.ResumeLayout(false);
             this.tabDep.ResumeLayout(false);
+            this.tabArr.ResumeLayout(false);
             this.panelTo.ResumeLayout(false);
             this.panelTo.PerformLayout();
             this.panelFrom.ResumeLayout(false);
@@ -559,11 +588,11 @@
         private TabPage tabMap;
         private Panel panelDateFilter;
         private Button btnRefresh;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dateTimePickerDepDate;
         private TabControl tabsDates;
         private TabPage tabDep;
         private TabPage tabArr;
-        private DateTimePicker dateTimePicker2;
+        private DateTimePicker dateTimePickerDepTime;
         private Panel panelDepartureBoard;
         private Button btnShare;
         private DataGridView dataGridViewTime;
@@ -572,6 +601,8 @@
         private DataGridViewTextBoxColumn dataGridViewBoxBoardNr;
         private DataGridViewTextBoxColumn dataGridViewBoxBoardDep;
         private DataGridViewTextBoxColumn dataGridViewBoxBoardTo;
+        private DateTimePicker dateTimePickerArrDate;
+        private DateTimePicker dateTimePickerArrTime;
         private DataGridViewTextBoxColumn dataGridViewBoxTimeDep;
         private DataGridViewTextBoxColumn dataGridViewBoxTimeFrom;
         private DataGridViewTextBoxColumn dataGridViewBoxTimeArr;
