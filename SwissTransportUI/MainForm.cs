@@ -22,10 +22,8 @@ namespace SwissTransportUI
             InitializeComponent();
         }
 
-
-        //Objekte 
+        //Objekte
         ListBox listBxSearch = new ListBox();
-
 
         //Actions
         private void checkDateFilter_CheckedChanged(object sender, EventArgs e)
