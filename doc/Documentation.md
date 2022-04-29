@@ -113,7 +113,7 @@ Wird keine Station gefunden kommt der Text «No Result» in die TextBox.
 Um das Programm auszuführen, können sie entweder das komplette Projekt unter Code herunterladen oder unter Clone klonen. Falls Sie nur die finale .exe Datei haben möchten, können Sie auf Download Latest klicken und die final.zip Datei herunterladen.
 
 
-[- Download Latest Here](/doc/fin/final.zip)
+[- Download Latest Here](/doc/fin)
 
 <br>
 
