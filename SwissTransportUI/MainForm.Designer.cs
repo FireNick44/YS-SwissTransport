@@ -224,6 +224,7 @@
             this.tabsContent.Size = new System.Drawing.Size(1106, 698);
             this.tabsContent.TabIndex = 99;
             this.tabsContent.TabStop = false;
+            this.tabsContent.MouseHover += new System.EventHandler(this.closeSearch);
             // 
             // tabTim
             // 
@@ -322,11 +323,11 @@
             // tabMap
             // 
             this.tabMap.Controls.Add(this.webViewMap);
-            this.tabMap.Location = new System.Drawing.Point(4, 32);
+            this.tabMap.Location = new System.Drawing.Point(4, 29);
             this.tabMap.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabMap.Name = "tabMap";
             this.tabMap.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabMap.Size = new System.Drawing.Size(1098, 662);
+            this.tabMap.Size = new System.Drawing.Size(1098, 665);
             this.tabMap.TabIndex = 1;
             this.tabMap.Text = "                     Map                      ";
             this.tabMap.UseVisualStyleBackColor = true;

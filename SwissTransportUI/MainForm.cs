@@ -43,6 +43,10 @@ namespace SwissTransportUI
         {
             grayBoxTester();
         }
+        private void btnShare_Click(object sender, EventArgs e)
+        {
+            setUpShare();
+        }
         private void txtBxFrom_Enter(object sender, EventArgs e)
         {
             create_Searchbar(this.txtBxFrom, true);
@@ -83,10 +87,6 @@ namespace SwissTransportUI
                 if (listBxSearch.Text == "") { }
                 else txtBxTo.Text = listBxSearch.Text;
             }
-        }
-        private void closeSearch()
-        {
-            create_Searchbar(this, true);
         }
 
         //Error Prints
@@ -190,6 +190,7 @@ namespace SwissTransportUI
                     else
                     {
                         setUpTimetable();
+                        setUpMap();
                     }
                 }
 
@@ -206,9 +207,7 @@ namespace SwissTransportUI
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
-
 
         private void setUpBoard()
         {
@@ -274,30 +273,56 @@ namespace SwissTransportUI
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void btnShare_Click(object sender, EventArgs e)
+        private void setUpMap()
         {
-            string mail = "mailto:?subject=Swiss%20Transport%20Connection&body=";
-
-            string value1 = "Your%20selection:%20";
-            foreach (DataGridViewRow row in dataGridViewTime.SelectedRows)
+            try
             {
-                value1 += row.Cells[0].FormattedValue.ToString();
-                value1 += "%20";
-                value1 += row.Cells[1].FormattedValue.ToString();
-                value1 += "%20";
-                value1 += row.Cells[2].FormattedValue.ToString();
-                value1 += "%20";
-                value1 += row.Cells[3].FormattedValue.ToString();
-                value1 += "%20";
-                value1 += row.Cells[4].FormattedValue.ToString();
+                string map = "https://www.google.com/maps/dir/";
+
+                string from = txtBxFrom.Text;
+                string to = txtBxTo.Text;
+
+                var spaceToPlusFrom = from.Split(' ');
+                var spaceToPlusTo = to.Split(' ');
+
+                from = spaceToPlusFrom[0] + "+" + spaceToPlusFrom[1];
+                to = spaceToPlusTo[0] + "+" + spaceToPlusTo[1];
+                map += from + "/" + to;
+
+                Uri finalUri = new Uri(map);
+                webViewMap.Source = finalUri;
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void setUpShare()
+        {
+            try
+            {
+                string mail = "mailto:?subject=Swiss%20Transport%20Connection&body=";
 
-            mail += value1;
-            string finalmail = mail ;
+                string text = "My%20Connection:%20";
+                foreach (DataGridViewRow row in dataGridViewTime.SelectedRows)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        text += "%20";
+                        text += row.Cells[i].FormattedValue.ToString();
+                    }
+                }
 
-            Uri finalUri = new Uri(finalmail);
-            webViewMap.Source = finalUri;
+                mail += text;
+                string finalmail = mail;
+
+                Uri finalUri = new Uri(finalmail);
+                webViewMap.Source = finalUri;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
