@@ -31,25 +31,31 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelCenter = new System.Windows.Forms.Panel();
             this.btnShare = new System.Windows.Forms.Button();
             this.panelDepartureBoard = new System.Windows.Forms.Panel();
             this.dataGridViewBoard = new System.Windows.Forms.DataGridView();
-            this.dataGridViewBoxNr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewBoxDep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewBoxTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxBoardNr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxBoardDep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxBoardTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelBoard = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.tabsContent = new System.Windows.Forms.TabControl();
             this.tabTim = new System.Windows.Forms.TabPage();
             this.dataGridViewTime = new System.Windows.Forms.DataGridView();
-            this.From = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.To = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Departure = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Arrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxTimeDep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxTimeFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxTimeArr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxTimeTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewBoxTimeDura = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMap = new System.Windows.Forms.TabPage();
+            this.webViewMap = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.panelDateFilter = new System.Windows.Forms.Panel();
             this.checkDateFilter = new System.Windows.Forms.CheckBox();
             this.tabsDates = new System.Windows.Forms.TabControl();
@@ -70,6 +76,8 @@
             this.tabsContent.SuspendLayout();
             this.tabTim.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTime)).BeginInit();
+            this.tabMap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webViewMap)).BeginInit();
             this.panelDateFilter.SuspendLayout();
             this.tabsDates.SuspendLayout();
             this.tabDep.SuspendLayout();
@@ -103,8 +111,10 @@
             this.btnShare.Name = "btnShare";
             this.btnShare.Size = new System.Drawing.Size(431, 52);
             this.btnShare.TabIndex = 5;
-            this.btnShare.Text = "Share";
+            this.btnShare.Text = "Mail Share";
             this.btnShare.UseVisualStyleBackColor = true;
+            this.btnShare.Click += new System.EventHandler(this.btnShare_Click);
+            this.btnShare.MouseHover += new System.EventHandler(this.closeSearch);
             // 
             // panelDepartureBoard
             // 
@@ -128,9 +138,9 @@
             this.dataGridViewBoard.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridViewBoard.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewBoard.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewBoxNr,
-            this.dataGridViewBoxDep,
-            this.dataGridViewBoxTo});
+            this.dataGridViewBoxBoardNr,
+            this.dataGridViewBoxBoardDep,
+            this.dataGridViewBoxBoardTo});
             this.dataGridViewBoard.GridColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridViewBoard.Location = new System.Drawing.Point(2, 50);
             this.dataGridViewBoard.Margin = new System.Windows.Forms.Padding(2);
@@ -143,41 +153,42 @@
             this.dataGridViewBoard.Size = new System.Drawing.Size(425, 384);
             this.dataGridViewBoard.TabIndex = 1;
             // 
-            // dataGridViewBoxNr
+            // dataGridViewBoxBoardNr
             // 
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataGridViewBoxNr.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewBoxNr.HeaderText = "Nr";
-            this.dataGridViewBoxNr.MinimumWidth = 6;
-            this.dataGridViewBoxNr.Name = "dataGridViewBoxNr";
-            this.dataGridViewBoxNr.ReadOnly = true;
-            this.dataGridViewBoxNr.Width = 60;
+            this.dataGridViewBoxBoardNr.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewBoxBoardNr.HeaderText = "Nr";
+            this.dataGridViewBoxBoardNr.MinimumWidth = 6;
+            this.dataGridViewBoxBoardNr.Name = "dataGridViewBoxBoardNr";
+            this.dataGridViewBoxBoardNr.ReadOnly = true;
+            this.dataGridViewBoxBoardNr.Width = 60;
             // 
-            // dataGridViewBoxDep
+            // dataGridViewBoxBoardDep
             // 
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonFace;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataGridViewBoxDep.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewBoxDep.HeaderText = "Dep";
-            this.dataGridViewBoxDep.MinimumWidth = 6;
-            this.dataGridViewBoxDep.Name = "dataGridViewBoxDep";
-            this.dataGridViewBoxDep.ReadOnly = true;
-            this.dataGridViewBoxDep.Width = 75;
+            this.dataGridViewBoxBoardDep.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewBoxBoardDep.HeaderText = "Dep";
+            this.dataGridViewBoxBoardDep.MinimumWidth = 6;
+            this.dataGridViewBoxBoardDep.Name = "dataGridViewBoxBoardDep";
+            this.dataGridViewBoxBoardDep.ReadOnly = true;
+            this.dataGridViewBoxBoardDep.Width = 75;
             // 
-            // dataGridViewBoxTo
+            // dataGridViewBoxBoardTo
             // 
-            this.dataGridViewBoxTo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewBoxBoardTo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ButtonFace;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataGridViewBoxTo.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewBoxTo.HeaderText = "To";
-            this.dataGridViewBoxTo.MinimumWidth = 6;
-            this.dataGridViewBoxTo.Name = "dataGridViewBoxTo";
-            this.dataGridViewBoxTo.ReadOnly = true;
+            this.dataGridViewBoxBoardTo.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewBoxBoardTo.HeaderText = "To";
+            this.dataGridViewBoxBoardTo.MinimumWidth = 6;
+            this.dataGridViewBoxBoardTo.Name = "dataGridViewBoxBoardTo";
+            this.dataGridViewBoxBoardTo.ReadOnly = true;
             // 
             // labelBoard
             // 
@@ -200,6 +211,7 @@
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.btnRefresh.MouseHover += new System.EventHandler(this.closeSearch);
             // 
             // tabsContent
             // 
@@ -235,73 +247,103 @@
             this.dataGridViewTime.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridViewTime.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTime.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.From,
-            this.To,
-            this.Departure,
-            this.Arrival,
-            this.Duration});
+            this.dataGridViewBoxTimeDep,
+            this.dataGridViewBoxTimeFrom,
+            this.dataGridViewBoxTimeArr,
+            this.dataGridViewBoxTimeTo,
+            this.dataGridViewBoxTimeDura});
             this.dataGridViewTime.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridViewTime.Location = new System.Drawing.Point(2, 0);
-            this.dataGridViewTime.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewTime.Location = new System.Drawing.Point(2, 5);
+            this.dataGridViewTime.Margin = new System.Windows.Forms.Padding(2, 5, 2, 2);
             this.dataGridViewTime.Name = "dataGridViewTime";
             this.dataGridViewTime.ReadOnly = true;
             this.dataGridViewTime.RowHeadersVisible = false;
             this.dataGridViewTime.RowHeadersWidth = 51;
             this.dataGridViewTime.RowTemplate.Height = 29;
             this.dataGridViewTime.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewTime.Size = new System.Drawing.Size(1094, 472);
+            this.dataGridViewTime.Size = new System.Drawing.Size(1094, 554);
             this.dataGridViewTime.TabIndex = 0;
             // 
-            // From
+            // dataGridViewBoxTimeDep
             // 
-            this.From.HeaderText = "From";
-            this.From.MinimumWidth = 6;
-            this.From.Name = "From";
-            this.From.ReadOnly = true;
-            this.From.Width = 125;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewBoxTimeDep.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewBoxTimeDep.HeaderText = "Departure";
+            this.dataGridViewBoxTimeDep.MinimumWidth = 6;
+            this.dataGridViewBoxTimeDep.Name = "dataGridViewBoxTimeDep";
+            this.dataGridViewBoxTimeDep.ReadOnly = true;
+            this.dataGridViewBoxTimeDep.Width = 125;
             // 
-            // To
+            // dataGridViewBoxTimeFrom
             // 
-            this.To.HeaderText = "To";
-            this.To.MinimumWidth = 6;
-            this.To.Name = "To";
-            this.To.ReadOnly = true;
-            this.To.Width = 125;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewBoxTimeFrom.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewBoxTimeFrom.HeaderText = "From";
+            this.dataGridViewBoxTimeFrom.MinimumWidth = 6;
+            this.dataGridViewBoxTimeFrom.Name = "dataGridViewBoxTimeFrom";
+            this.dataGridViewBoxTimeFrom.ReadOnly = true;
+            this.dataGridViewBoxTimeFrom.Width = 325;
             // 
-            // Departure
+            // dataGridViewBoxTimeArr
             // 
-            this.Departure.HeaderText = "Departure";
-            this.Departure.MinimumWidth = 6;
-            this.Departure.Name = "Departure";
-            this.Departure.ReadOnly = true;
-            this.Departure.Width = 125;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewBoxTimeArr.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridViewBoxTimeArr.HeaderText = "Arrival";
+            this.dataGridViewBoxTimeArr.MinimumWidth = 6;
+            this.dataGridViewBoxTimeArr.Name = "dataGridViewBoxTimeArr";
+            this.dataGridViewBoxTimeArr.ReadOnly = true;
+            this.dataGridViewBoxTimeArr.Width = 125;
             // 
-            // Arrival
+            // dataGridViewBoxTimeTo
             // 
-            this.Arrival.HeaderText = "Arrival";
-            this.Arrival.MinimumWidth = 6;
-            this.Arrival.Name = "Arrival";
-            this.Arrival.ReadOnly = true;
-            this.Arrival.Width = 125;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewBoxTimeTo.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewBoxTimeTo.HeaderText = "To";
+            this.dataGridViewBoxTimeTo.MinimumWidth = 6;
+            this.dataGridViewBoxTimeTo.Name = "dataGridViewBoxTimeTo";
+            this.dataGridViewBoxTimeTo.ReadOnly = true;
+            this.dataGridViewBoxTimeTo.Width = 325;
             // 
-            // Duration
+            // dataGridViewBoxTimeDura
             // 
-            this.Duration.HeaderText = "Duration";
-            this.Duration.MinimumWidth = 6;
-            this.Duration.Name = "Duration";
-            this.Duration.ReadOnly = true;
-            this.Duration.Width = 125;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewBoxTimeDura.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridViewBoxTimeDura.HeaderText = "Duration";
+            this.dataGridViewBoxTimeDura.MinimumWidth = 6;
+            this.dataGridViewBoxTimeDura.Name = "dataGridViewBoxTimeDura";
+            this.dataGridViewBoxTimeDura.ReadOnly = true;
+            this.dataGridViewBoxTimeDura.Width = 125;
             // 
             // tabMap
             // 
-            this.tabMap.Location = new System.Drawing.Point(4, 29);
+            this.tabMap.Controls.Add(this.webViewMap);
+            this.tabMap.Location = new System.Drawing.Point(4, 32);
             this.tabMap.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabMap.Name = "tabMap";
             this.tabMap.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabMap.Size = new System.Drawing.Size(1098, 665);
+            this.tabMap.Size = new System.Drawing.Size(1098, 662);
             this.tabMap.TabIndex = 1;
             this.tabMap.Text = "                     Map                      ";
             this.tabMap.UseVisualStyleBackColor = true;
+            // 
+            // webViewMap
+            // 
+            this.webViewMap.AllowExternalDrop = true;
+            this.webViewMap.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.webViewMap.CreationProperties = null;
+            this.webViewMap.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webViewMap.Location = new System.Drawing.Point(4, 4);
+            this.webViewMap.Margin = new System.Windows.Forms.Padding(4);
+            this.webViewMap.Name = "webViewMap";
+            this.webViewMap.Size = new System.Drawing.Size(1088, 654);
+            this.webViewMap.Source = new System.Uri("https://www.google.com/maps", System.UriKind.Absolute);
+            this.webViewMap.TabIndex = 0;
+            this.webViewMap.ZoomFactor = 1D;
             // 
             // panelDateFilter
             // 
@@ -463,6 +505,7 @@
             this.btnSwitch.Text = "⇄";
             this.btnSwitch.UseVisualStyleBackColor = true;
             this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
+            this.btnSwitch.MouseHover += new System.EventHandler(this.closeSearch);
             // 
             // MainForm
             // 
@@ -484,6 +527,8 @@
             this.tabsContent.ResumeLayout(false);
             this.tabTim.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTime)).EndInit();
+            this.tabMap.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webViewMap)).EndInit();
             this.panelDateFilter.ResumeLayout(false);
             this.panelDateFilter.PerformLayout();
             this.tabsDates.ResumeLayout(false);
@@ -521,14 +566,15 @@
         private Panel panelDepartureBoard;
         private Button btnShare;
         private DataGridView dataGridViewTime;
-        private DataGridViewTextBoxColumn From;
-        private DataGridViewTextBoxColumn To;
-        private DataGridViewTextBoxColumn Departure;
-        private DataGridViewTextBoxColumn Arrival;
-        private DataGridViewTextBoxColumn Duration;
         private DataGridView dataGridViewBoard;
-        private DataGridViewTextBoxColumn dataGridViewBoxNr;
-        private DataGridViewTextBoxColumn dataGridViewBoxDep;
-        private DataGridViewTextBoxColumn dataGridViewBoxTo;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webViewMap;
+        private DataGridViewTextBoxColumn dataGridViewBoxBoardNr;
+        private DataGridViewTextBoxColumn dataGridViewBoxBoardDep;
+        private DataGridViewTextBoxColumn dataGridViewBoxBoardTo;
+        private DataGridViewTextBoxColumn dataGridViewBoxTimeDep;
+        private DataGridViewTextBoxColumn dataGridViewBoxTimeFrom;
+        private DataGridViewTextBoxColumn dataGridViewBoxTimeArr;
+        private DataGridViewTextBoxColumn dataGridViewBoxTimeTo;
+        private DataGridViewTextBoxColumn dataGridViewBoxTimeDura;
     }
 }

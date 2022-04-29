@@ -5,11 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SwissTransport.Core;
 using SwissTransport.Models;
-
+using Microsoft.Web.WebView2.Core;
 
 namespace SwissTransportUI
 {
@@ -24,6 +25,7 @@ namespace SwissTransportUI
 
         //Objekte 
         ListBox listBxSearch = new ListBox();
+
 
         //Actions
         private void checkDateFilter_CheckedChanged(object sender, EventArgs e)
@@ -60,6 +62,10 @@ namespace SwissTransportUI
         }
         
         //Custom Actions
+        private void closeSearch(object sender, EventArgs e)
+        {
+            create_Searchbar(this, false);
+        }
         private void selectSearchFrom(object? sender, EventArgs e)
         {
             if (listBxSearch.Text == "") { }
@@ -78,6 +84,10 @@ namespace SwissTransportUI
                 else txtBxTo.Text = listBxSearch.Text;
             }
         }
+        private void closeSearch()
+        {
+            create_Searchbar(this, true);
+        }
 
         //Error Prints
         private void noResultBoard()
@@ -88,7 +98,7 @@ namespace SwissTransportUI
         private void noResultTimetable()
         {
             dataGridViewTime.Rows.Clear();
-            dataGridViewTime.Rows.Add("404", "--:--", "Not a Station");
+            dataGridViewTime.Rows.Add("404", "####", "Not a", "Station");
         }
 
 
@@ -232,16 +242,62 @@ namespace SwissTransportUI
                 else
                 {
                     var stationBoard = t.GetStationBoard(txtBxFrom.Text, txtBxTo.Text);
-                    var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text);
                     var test3 = t.GetStations(txtBxFrom.Text);
-                    StationBoardRoot root;
-                    MessageBox.Show("Timetable");
+
+                    var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text);
+                    dataGridViewTime.Rows.Clear();
+
+                    foreach(Connection result in connections.ConnectionList)
+                    {
+                        DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+                        string dep = dateduration.ToString("HH:mm");
+
+                        DateTime date = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+                        string arr = date.ToString("HH:mm");
+
+                        string timestring = result.Duration.ToString();
+                        var split = timestring.Split('d', ':');
+
+                        string hour = Convert.ToString(split[1]);
+                        string mins = Convert.ToString(split[2]);
+                        string duration = "";
+
+                        if (hour != "0" || hour != "00") duration += hour + "h ";
+                        duration += mins + "min";
+
+                        dataGridViewTime.Rows.Add(dep, result.From.Station.Name, arr, result.To.Station.Name, duration);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnShare_Click(object sender, EventArgs e)
+        {
+            string mail = "mailto:?subject=Swiss%20Transport%20Connection&body=";
+
+            string value1 = "Your%20selection:%20";
+            foreach (DataGridViewRow row in dataGridViewTime.SelectedRows)
+            {
+                value1 += row.Cells[0].FormattedValue.ToString();
+                value1 += "%20";
+                value1 += row.Cells[1].FormattedValue.ToString();
+                value1 += "%20";
+                value1 += row.Cells[2].FormattedValue.ToString();
+                value1 += "%20";
+                value1 += row.Cells[3].FormattedValue.ToString();
+                value1 += "%20";
+                value1 += row.Cells[4].FormattedValue.ToString();
+            }
+
+            mail += value1;
+            string finalmail = mail ;
+
+            Uri finalUri = new Uri(finalmail);
+            webViewMap.Source = finalUri;
         }
     }
 }
