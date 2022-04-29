@@ -118,6 +118,12 @@ Wird keine Station gefunden kommt der Text «No Result» in die TextBox.
 <a name="testproto"></a>
 <h2>Testprotokoll</h2>
 
+---
+
+-
+
+<br>
+
 <a name="instal"></a>
 <h2>Installationsanleitung</h2>
 
