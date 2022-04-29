@@ -23,10 +23,7 @@ namespace SwissTransportUI
 
 
         //Objekte 
-        ListBox listBxSearchFrom = new ListBox();
-        ListBox listBxSearchTo = new ListBox();
         ListBox listBxSearch = new ListBox();
-
 
         //Actions
         private void checkDateFilter_CheckedChanged(object sender, EventArgs e)
@@ -42,7 +39,7 @@ namespace SwissTransportUI
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            refresh();
+            grayBoxTester();
         }
         private void txtBxFrom_Enter(object sender, EventArgs e)
         {
@@ -82,34 +79,52 @@ namespace SwissTransportUI
             }
         }
 
+        //Error Prints
+        private void noResultBoard()
+        {
+            dataGridViewBoard.Rows.Clear();
+            dataGridViewBoard.Rows.Add("404", "--:--", "Not a Station");
+        }
+        private void noResultTimetable()
+        {
+            dataGridViewTime.Rows.Clear();
+            dataGridViewTime.Rows.Add("404", "--:--", "Not a Station");
+        }
 
 
         //Functions
         private void searchFromTo(Control sender)
         {
-            if (sender.Text != "")
+            try
             {
-                listBxSearch.Items.Clear();
-                listBxSearch.BringToFront();
-                listBxSearch.Visible = true;
-
-                Stations stations = t.GetStations(sender.Text);
-                var noResult = stations.StationList.FirstOrDefault(); //1.Item
-
-                if (noResult == null || noResult.Name == null) listBxSearch.Items.Add("No results"); //NoResult Test
-                else if (noResult.Name != null)
+                if (sender.Text != "")
                 {
-                    foreach (var item in stations.StationList)
-                    {
-                        listBxSearch.Items.Add(item.Name.ToString());
-                    }
-                }
+                    listBxSearch.Items.Clear();
+                    listBxSearch.BringToFront();
+                    listBxSearch.Visible = true;
 
+                    Stations stations = t.GetStations(sender.Text);
+                    var noResult = stations.StationList.FirstOrDefault(); //1.Item
+
+                    if (noResult == null || noResult.Name == null) listBxSearch.Items.Add("No results"); //NoResult Test
+                    else if (noResult.Name != null)
+                    {
+                        foreach (var item in stations.StationList)
+                        {
+                            listBxSearch.Items.Add(item.Name.ToString());
+                        }
+                    }
+
+                }
+                else if (sender.Text == "")
+                {
+                    listBxSearch.SendToBack();
+                    listBxSearch.Visible = false;
+                }
             }
-            else if (sender.Text == "")
+            catch (Exception ex)
             {
-                listBxSearch.SendToBack();
-                listBxSearch.Visible = false;
+                MessageBox.Show(ex.Message);
             }
         }
         private void create_Searchbar(Control sender, bool mission)
@@ -136,64 +151,97 @@ namespace SwissTransportUI
                 listBxSearch.Visible = false;
             }
         }
-        private void refresh()
+        private void grayBoxTester()
         {
-
-            if (txtBxFrom.Text == "") noResultBoard();
-            else
+            try
             {
-                var testFrom = t.GetStations(txtBxFrom.Text);
-                var noResultFrom = testFrom.StationList.FirstOrDefault();
-
-                if (noResultFrom == null || noResultFrom.Name == null) noResultBoard();
-                else
+                //Filter From -> Board
+                if (txtBxFrom.Text != "")
                 {
-                    string currentLocation;
-                    //string fill = "     choose a starting location     ";
-                    string fill = "────────────────────────────────────";
-                    var stationBoard = t.GetStationBoard(txtBxFrom.Text, txtBxFrom.Text);
+                    Stations testFrom = t.GetStations(txtBxFrom.Text);
+                    var noResultFrom = testFrom.StationList.FirstOrDefault();
 
-                    currentLocation = "(" + stationBoard.Station.Name + ")";
-                    if (stationBoard.Station.Name == null) currentLocation = "location (Not a station)";
-
-                    listBxDepBoard.Items.Clear();
-                    listBxDepBoard.Items.Add(currentLocation);
-
-                    foreach (StationBoard departure in stationBoard.Entries)
+                    if (noResultFrom == null || noResultFrom.Name == null) noResultBoard();
+                    else
                     {
-
-                        listBxDepBoard.Items.Add(fill);
-
-                        string timeSplit = "";
-
-                        if (departure.Stop.Departure.TimeOfDay.Hours < 10) timeSplit = "0";
-                        else if (departure.Stop.Departure.TimeOfDay.Hours == 0) timeSplit = "00";
-                        listBxDepBoard.Items.Add(
-
-                            + departure.Stop.Departure.TimeOfDay.Hours
-                            + ":"
-                            + timeSplit
-                            + departure.Stop.Departure.TimeOfDay.Minutes
-                            + "  "
-                            + departure.To
-                            );
+                        setUpBoard();
                     }
                 }
-            }
 
+                //Filter From & To -> Timetable
+                if (txtBxFrom.Text != "" && txtBxTo.Text != "")
+                {
+                    Stations testFrom = t.GetStations(txtBxFrom.Text);
+                    Stations testTo = t.GetStations(txtBxTo.Text);
+                    var noResultFrom = testFrom.StationList.FirstOrDefault();
+                    var noResultTo = testTo.StationList.FirstOrDefault();
+
+                    if (noResultFrom == null || noResultFrom.Name == null || noResultTo == null || noResultTo.Name == null) noResultTimetable();
+                    else
+                    {
+                        setUpTimetable();
+                    }
+                }
+
+                //Anything else
+                //not wotking with only one letter (l -> Luzern)
+                //more testing 
+                else
+                {
+                    noResultBoard();
+                    noResultTimetable();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
-        //Ausgabe
-        private void noResultBoard()
+
+        private void setUpBoard()
         {
-            listBxDepBoard.Items.Clear();
-            listBxDepBoard.Items.AddRange(new object[]
+            try
             {
-                "",
-                "              No result             ",
-                ""
-            });
+                var stationBoard = t.GetStationBoard(txtBxFrom.Text, txtBxFrom.Text);
+                dataGridViewBoard.Rows.Clear();
+
+                foreach (StationBoard departures in stationBoard.Entries)
+                {
+                    DateTime date = DateTime.Parse(departures.Stop.Departure.TimeOfDay.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+                    string t = date.ToString("HH:mm");
+
+                    dataGridViewBoard.Rows.Add(departures.Category + " " + departures.Number, t, departures.To);
+                }
+                if (dataGridViewBoard.Rows.Count == 0) noResultBoard();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void setUpTimetable()
+        {
+            try
+            {
+                if (checkDateFilter.Checked == true)
+                {
+                    MessageBox.Show("Timetable DatePicker");
+                }
+                else
+                {
+                    var stationBoard = t.GetStationBoard(txtBxFrom.Text, txtBxTo.Text);
+                    var connections = t.GetConnections(txtBxFrom.Text, txtBxTo.Text);
+                    var test3 = t.GetStations(txtBxFrom.Text);
+                    StationBoardRoot root;
+                    MessageBox.Show("Timetable");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
