@@ -154,7 +154,8 @@
             this.dataGridViewBoard.RowTemplate.Height = 29;
             this.dataGridViewBoard.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewBoard.Size = new System.Drawing.Size(425, 384);
-            this.dataGridViewBoard.TabIndex = 1;
+            this.dataGridViewBoard.TabIndex = 99;
+            this.dataGridViewBoard.TabStop = false;
             // 
             // dataGridViewBoxBoardNr
             // 
@@ -555,7 +556,7 @@
             this.MinimumSize = new System.Drawing.Size(1600, 850);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Swiss Transport";
+            this.Text = "SwissTransport v1.9.1";
             this.panelCenter.ResumeLayout(false);
             this.panelDepartureBoard.ResumeLayout(false);
             this.panelDepartureBoard.PerformLayout();

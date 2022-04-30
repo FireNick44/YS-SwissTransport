@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -108,7 +106,7 @@ namespace SwissTransportUI
         private void noResultTimetable()
         {
             dataGridViewTime.Rows.Clear();
-            dataGridViewTime.Rows.Add("404", "####", "Not a", "Station");
+            dataGridViewTime.Rows.Add(" Never", " Gonna", " Give", " You", " Up");
         }
 
 
@@ -144,7 +142,7 @@ namespace SwissTransportUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n Error found in searchFromTo()");
             }
         }
         private void create_Searchbar(Control sender, bool mission)
@@ -175,6 +173,9 @@ namespace SwissTransportUI
         {
             try
             {
+                //No Searchbar
+                create_Searchbar(this, false);
+
                 //Filter same Text 
                 if (txtBxFrom.Text == txtBxTo.Text && txtBxFrom.Text != "" && txtBxTo.Text != "")
                 {
@@ -222,7 +223,7 @@ namespace SwissTransportUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n Error found in grayBoxTester()");
             }
         }
 
@@ -245,7 +246,7 @@ namespace SwissTransportUI
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n Error found in setUpBoard()");
             }
         }
         private void setUpTimetable()
@@ -254,7 +255,7 @@ namespace SwissTransportUI
             {
                 //Vars
                 bool filter = false;
-                bool isArrivalTime = false;
+                int isArrivalTime = 0;
                 string dep = "";
                 string arr = "";
                 int limit = 16;
@@ -264,13 +265,13 @@ namespace SwissTransportUI
                 if (checkDateFilter.CheckState == CheckState.Checked) filter = true;
                 if (tabsDates.SelectedTab.Name == "tabDep")
                 {
-                    isArrivalTime = false;
+                    isArrivalTime = 0;
                     time = dateTimePickerDepTime.Value;
                     date = dateTimePickerDepDate.Value;
                 }
                 else if (tabsDates.SelectedTab.Name == "tabArr") 
                 {
-                    isArrivalTime = true;
+                    isArrivalTime = 1;
                     time = dateTimePickerArrTime.Value;
                     date = dateTimePickerArrDate.Value;
                 }
@@ -280,18 +281,19 @@ namespace SwissTransportUI
 
                 foreach(Connection result in connections.ConnectionList)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
+                    DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+#pragma warning disable CS8604 // Possible null reference argument.
+                    DateTime dateconv = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
+
                     //Time Format
                     if (!filter)
                     {
-                        DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
-                        DateTime dateconv = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
                         arr = dateconv.ToString("HH:mm");
                         dep = dateduration.ToString("HH:mm");
                     }
                     else if(filter)
                     {
-                        DateTime dateduration = DateTime.Parse(result.From.Departure.ToString(), System.Globalization.CultureInfo.CurrentCulture);
-                        DateTime dateconv = DateTime.Parse(result.To.Arrival.ToString(), System.Globalization.CultureInfo.CurrentCulture);
                         arr = dateconv.ToString("dd/MM/y HH:mm");
                         dep = dateduration.ToString("dd/MM/y HH:mm");
                     }
@@ -310,7 +312,7 @@ namespace SwissTransportUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n Error found in setUpTimetable()");
             }
         }
         private void setUpMap()
@@ -334,7 +336,7 @@ namespace SwissTransportUI
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n Error found in setUpMap()");
             }
         }
         private void setUpShare()
@@ -358,7 +360,7 @@ namespace SwissTransportUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n Error found in setUpShare()");
             }
         }
     }
