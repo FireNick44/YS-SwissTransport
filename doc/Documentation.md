@@ -3,8 +3,6 @@
 
 <h2 align="left"> Inhaltsverzeichnis</h1>
 
----
-
  - [Einleitung](#einl)
  - [Erreichte Ziele](#erre)
  - [Mockup](#mock)
@@ -12,7 +10,6 @@
  - [Aktivitätsdiagramm](#aktiv)
  - [Testfälle](#test)
  - [Testprotokoll](#testproto)
- - [Code](#code)
  - [Installationsanleitung](#instal)
 
   <!--  - [Andere](#more) -->
@@ -23,12 +20,8 @@
 <a name="einl"></a>
 <h2>Einleitung</h2>
 
----
-
 <a name="erre"></a>
 <h2>Erreichte Ziele</h2>
-
----
 
 | Ziel                             | Kommentar    |
 |----------------------------------|--------------|
@@ -46,13 +39,9 @@
 <a name="mock"></a>
 <h2>Mockup</h2>
 
----
-
 Als Mockup Inspiration habe ich definitiv die `SBB-Mobile-App` genutzt. Ich wollte viele Elemente übernehmen, weswegen ich mein Layout öfters anpassen musste. Die Idee war simpel, das Programm soll zwei Eingabefenster haben, in denen man den Standort und den gewünschten Zielort eingeben kann. Dazu mehrere Datenflächen, auf denen dann die Informationen ausgegeben kann. Aufgrund von WindowsForms konnte ich viele Ideen nicht umsetzten, weswegen ich meine Anforderungen etwas niedriger setzten musste. Zu Beginn sollten Fahrplan und Karte, Knöpfe sein, die bei Knopfdruck dann den gewünschten Inhalt anzeigen, jedoch war es einfacher ein TabControl einzubauen, in dem TabControl hat man ungefähr die gleichen Funktionen wie im Browser weswegen es einfacher zu bedienen ist. Ein Refresh-Knopf war zu Beginn auch nicht geplant, jedoch war es zu Ressourcen intensiv bei jeder Tasteneingabe eine Abfrage zu tätigen, weswegen schlussendlich doch ein Refresh-Knopf hermusste.
 
 [ SBB Mobile App ](https://play.google.com/store/apps/details?id=ch.sbb.mobile.android.b2c&hl=en&gl=US)
-
----
 
 <p>
   <img align="center" src="img/TabletLayout.png"/>
@@ -85,8 +74,6 @@ Als Mockup Inspiration habe ich definitiv die `SBB-Mobile-App` genutzt. Ich woll
 <a name="aktiv"></a>
 <h2>Aktivitätsdiagramm</h2>
 
----
-
 Dieses Aktivitätsdiagramm bezieht sich auf die 4. User Story. 
 Der Benutzer gibt eine Eingabe ein, welche mit Hilfe von getStations verglichen wird.
 Wird eine Station gefunden kommt der Vorschlag oder die Vorschläge in die TextBox zur Visualisierung der Ergebnisse. 
@@ -97,8 +84,6 @@ Wird keine Station gefunden kommt der Text «No Result» in die TextBox.
 
 <a name="test"></a>
 <h2>Testfälle</h2>
-
----
 
 |Schritt| Aktivität | Erweitertes Resultat |
 |-------|-----------|----------------------|
@@ -118,8 +103,6 @@ Wird keine Station gefunden kommt der Text «No Result» in die TextBox.
 <a name="testproto"></a>
 <h2>Testprotokoll</h2>
 
----
-
 -
 
 <br>
@@ -127,22 +110,18 @@ Wird keine Station gefunden kommt der Text «No Result» in die TextBox.
 <a name="instal"></a>
 <h2>Installationsanleitung</h2>
 
----
-
 Um das Programm auszuführen, können sie entweder das komplette Projekt unter Code herunterladen oder unter Clone klonen. Falls Sie nur die finale .exe Datei haben möchten, können Sie auf Download Latest klicken und die final.zip Datei herunterladen.
 
 
-[- Download Latest Here](/doc/fin/final.zip)
+[- Download Latest Here](/doc/fin)
 
 <br>
 
 ### VisualStudio
----
 In VisualStudio müssen Sie zuerst die `.snl Datei` öffnen und danach `SwissTransportUI` als `Startprojekt festlegen`. Dann können Sie `F5 drücken`, um das Programm zu starten.
 
 
 ### Final.zip
----
 Nachdem Sie die `final.zip` Datei heruntergeladen haben, müssen Sie die Datei `extrahieren`. (Empfohlen wird 7-Zip oder Winrar)
 Danach können Sie problemlos die `.exe Datei` ausführen.
 
