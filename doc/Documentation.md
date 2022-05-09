@@ -1,4 +1,4 @@
-<p align="left"> Yannic Studer | 29.04.2022</p1>
+<p align="left"> Yannic Studer | 09.05.2022</p1>
 <h1 align="center"> Dokumentation M318</h1>
 
 <h2 align="left"> Inhaltsverzeichnis</h1>
@@ -14,25 +14,26 @@
 
   <!--  - [Andere](#more) -->
 
-
 <br>
 
 <a name="einl"></a>
 <h2>Einleitung</h2>
 
+Am 29.04.2022 habe ich am Überbetrieblichen-Kurs, welcher das Modul 318 behandelt, teilgenommen. Die Benotung des Moduls wurde durch eine praktische Arbeit bestimmt. Im Unterricht bekamen wir deswegen eine simulierte Anforderung über. Die Anforderung war eine Applikation, welche die ÖV-Verbindungen anzeigt und zusätzliche Wünsche des Kunden erfüllt. Beispielsweise eine Maps-Einbindung oder eine Möglichkeit die Verbindung via Mail zu teilen. Ausserdem hat die imaginäre Firma eine strickte Sicherheit weswegen «nur» Windows-Maschinen ohne Webbrowser benutzt werden.
+
 <a name="erre"></a>
 <h2>Erreichte Ziele</h2>
 
-| Ziel                             | Kommentar    |
-|----------------------------------|--------------|
-| - [x] Start - Endstation         | Einwandfrei  |
-| - [x] Start - Endstation Eingabe | Einwandfrei  |
-| - [x] Abfahrtstafel              | Einwandfrei  |
-| - [x] Automatisch ausfüllen      | Mässig       |
-| - [x] Filter Suche               | Einwandfrei  |
-| - [x] Google Maps                | Einwandfrei  |
-| - [x] Mail Share                 | Einwandfrei  |
-| - [x] Eigene Idee:               | Einwandfrei  |
+| Ziel                       | Kommentar                      |
+|----------------------------|--------------------------------|
+| Start - Endstation         | Funktioniert einwandfrei       |
+| Start - Endstation Eingabe | Funktioniert einwandfrei       |
+| Abfahrtstafel              | Funktioniert einwandfrei       |
+| Automatisch ausfüllen      | Funktioniert, fast einwandfrei |
+| Filter Suche               | Funktioniert einwandfrei       |
+| Google Maps                | Funktioniert, fast einwandfrei |
+| Mail Share                 | Funktioniert, einwandfrei      |
+| Eigene Idee:               | Funktioniert, einwandfrei      |
 
 <br>
 
