@@ -86,18 +86,18 @@ Wird keine Station gefunden kommt der Text «No Result» in die TextBox.
 <a name="test"></a>
 <h2>Testfälle</h2>
 
-|Schritt| Aktivität | Erweitertes Resultat |
-|-------|-----------|----------------------|
-| 1 | Öffnen Sie das Programm | Kein Fehler |
-| 2 | Klicken Sie auf die From Suchbar | Kein Fehler und noch kein Dropdown |
-| 3 | Geben Sie in der From Suchbar einen Buchstaben ein | Kein Fehler und aber ein Dropdown |
-| 4 | Klicken Sie auf die To Suchbar | Kein Fehler und aber ein Dropdown |
-| 5 | Geben Sie in der To Suchbar einen Buchstaben ein | Kein Fehler und aber ein Dropdown |
-| 6 | Geben Sie in der From Suchbar Test123456789 ein | No Result in dem Dropdown |
-| 7 | Geben Sie in der To Suchbar Test123456789 ein | No Result in dem Dropdown |
-| 8 | Geben Sie in der From Suchbar zwei echte Orte ein |  Kein Fehler, Strassenempfehlung |
-| 9 | Geben Sie in der To Suchbar zwei echte Orte ein |  Kein Fehler, Strassenempfehlung |
-| 10 | Klicken sie auf den Refresh Knopf | Resultate erscheinen in Timeplan und Departure Board |
+|Schritt| Aktivität                                          | Erwartetes Resultat                                  |
+|-------|----------------------------------------------------|------------------------------------------------------|
+| 1     | Öffnen Sie das Programm                            | Kein Fehler                                          |
+| 2     | Klicken Sie auf die From Suchbar                   | Kein Fehler und noch kein Dropdown                   |
+| 3     | Geben Sie in der From Suchbar einen Buchstaben ein | Kein Fehler und aber ein Dropdown                    |
+| 4     | Klicken Sie auf die To Suchbar                     | Kein Fehler und aber ein Dropdown                    |
+| 5     | Geben Sie in der To Suchbar einen Buchstaben ein   | Kein Fehler und aber ein Dropdown                    |
+| 6     | Geben Sie in der From Suchbar Test123456789 ein    | No Result in dem Dropdown                            |
+| 7     | Geben Sie in der To Suchbar Test123456789 ein      | No Result in dem Dropdown                            |
+| 8     | Geben Sie in der From Suchbar zwei echte Orte ein  | Kein Fehler, Strassenempfehlung                      |
+| 9     | Geben Sie in der To Suchbar zwei echte Orte ein    | Kein Fehler, Strassenempfehlung                      |
+| 10    | Klicken sie auf den Refresh Knopf                  | Resultate erscheinen in Timeplan und Departure Board |
 
 <br>
 
